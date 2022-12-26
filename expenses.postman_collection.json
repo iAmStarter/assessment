@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "837100f7-a3cb-4b5b-ba0b-5ab3488067e0",
+		"_postman_id": "45f137ce-af65-49d0-927e-fe83d8a46d0c",
 		"name": "expenses",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "14595617"
+		"_exporter_id": "5750974"
 	},
 	"item": [
 		{
@@ -46,7 +46,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "November 10, 2009",
+						"value": "Bearer gopher2022",
 						"type": "text"
 					}
 				],
@@ -109,7 +109,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "November 10, 2009"
+						"value": "Bearer gopher2022"
 					}
 				],
 				"body": {
@@ -169,7 +169,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "November 10, 2009"
+						"value": "Bearer gopher2022"
 					}
 				],
 				"body": {
@@ -229,7 +229,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "November 10, 2009"
+						"value": "Bearer gopher2022"
 					}
 				],
 				"body": {
@@ -280,7 +280,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "November 10, 2009wrong_token"
+						"value": "Bearer gopher-2021"
 					}
 				],
 				"body": {
