@@ -88,10 +88,10 @@ func TestGetExpense(t *testing.T) {
 func seedExpense(t *testing.T) Expense {
 	var e Expense
 	body := bytes.NewBufferString(`{
-		"title": "Soju",
-		"amount": 9000,
-		"note": "Need to drink Soju 10 units on new year festival", 
-		"tags": ["drinking"]
+		"title": "strawberry smoothie",
+		"amount": 79,
+		"note": "night market promotion discount 10 bath", 
+		"tags": ["food", "beverage"]
 	}`)
 
 	err := request(http.MethodPost, uri("expenses"), body).Decode(&e)
