@@ -20,7 +20,7 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.KeyAuth(func(key string, c echo.Context) (bool, error) {
-		return key == "gopher2022", nil
+		return key == "27-Dec-2022", nil
 	}))
 
 	e.GET("/expenses", expense.GetExpensesHandler)
