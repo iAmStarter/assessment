@@ -29,7 +29,7 @@ func main() {
 	e.POST("/expenses", expense.CreateExpensesHandler)
 
 	port := os.Getenv("PORT")
-	log.Println("Server started at: %t", port)
+	log.Println("Server started at: %", port)
 
 	log.Fatal(e.Start(port))
 

@@ -14,7 +14,7 @@ func UpdateExpenseHandler(c echo.Context) error {
 	err := c.Bind(&e)
 	_, err = db.Exec("UPDATE expenses SET title=$2, amount=$3, note=$4, tags=$5 where id=$1", id, e.Title, e.Amount, e.Note, pq.Array(e.Tags))
 	if err != nil {
-		log.Fatal("can't prepare query one row statment", err)
+		log.Fatal("can't prepare query one row statement", err)
 		return c.JSON(http.StatusInternalServerError, Err{Message: err.Error()})
 	}
 
