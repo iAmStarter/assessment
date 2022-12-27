@@ -1,11 +1,16 @@
 package main
 
 import (
-	"fmt"
+	"context"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"log"
-	"os"
 
 	"github.com/iamstarter/expenseapi/expense"
 	_ "github.com/lib/pq"
@@ -14,7 +19,6 @@ import (
 func main() {
 
 	expense.InitDB()
-	fmt.Println("create table success")
 
 	e := echo.New()
 	e.Use(middleware.Logger())
@@ -29,9 +33,24 @@ func main() {
 	e.POST("/expenses", expense.CreateExpensesHandler)
 
 	port := os.Getenv("PORT")
+
+	go func() {
+		if err := e.Start(port); err != nil && err != http.ErrServerClosed {
+			e.Logger.Fatal("Shutting down the server")
+		}
+	}()
+
 	log.Println("Server started at: %", port)
 
-	log.Fatal(e.Start(port))
+	shutdown := make(chan os.Signal, 1)
+	signal.Notify(shutdown, os.Interrupt, syscall.SIGTERM)
 
-	log.Println("bye bye")
+	<-shutdown
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	if err := e.Shutdown(ctx); err != nil {
+		e.Logger.Fatal(err)
+	}
+
+	log.Println("Server stopped")
 }

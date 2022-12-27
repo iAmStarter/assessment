@@ -127,7 +127,7 @@ func (r *Response) Decode(v interface{}) error {
 
 func request(method, url string, body io.Reader) *Response {
 	req, _ := http.NewRequest(method, url, body)
-	auth := "Bearer gopher2022"
+	auth := "Bearer 27-Dec-2022"
 	req.Header.Add("Authorization", auth)
 	req.Header.Add("Content-Type", "application/json")
 	client := http.Client{}
