@@ -46,7 +46,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer 27-Dec-2022",
+						"value": "Bearer api-key-naja",
 						"type": "text"
 					}
 				],
@@ -109,7 +109,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer 27-Dec-2022"
+						"value": "Bearer api-key-naja"
 					}
 				],
 				"body": {
@@ -169,7 +169,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer 27-Dec-2022"
+						"value": "Bearer api-key-naja"
 					}
 				],
 				"body": {
@@ -229,7 +229,7 @@
 					{
 						"key": "Authorization",
 						"type": "text",
-						"value": "Bearer 27-Dec-2022"
+						"value": "Bearer api-key-naja"
 					}
 				],
 				"body": {

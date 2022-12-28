@@ -1,3 +1,5 @@
+//go:build integration
+
 package expense
 
 import (
@@ -11,6 +13,8 @@ import (
 	"testing"
 )
 
+var e Expense
+
 func TestCreateExpense(t *testing.T) {
 
 	body := bytes.NewBufferString(`{
@@ -20,7 +24,6 @@ func TestCreateExpense(t *testing.T) {
 		"tags": ["food", "beverage"]
 	}`)
 
-	var e Expense
 	res := request(http.MethodPost, uri("expenses"), body)
 	err := res.Decode(&e)
 
@@ -34,7 +37,6 @@ func TestCreateExpense(t *testing.T) {
 }
 
 func TestUpdateExpense(t *testing.T) {
-	e := seedExpense(t)
 
 	body := bytes.NewBufferString(`{
 		"title": "apple smoothie",
@@ -58,21 +60,8 @@ func TestUpdateExpense(t *testing.T) {
 	assert.Equal(t, []string{"beverage"}, update.Tags)
 }
 
-func TestGetAllExpenses(t *testing.T) {
-
-	seedExpense(t)
-	var es []Expense
-	res := request(http.MethodGet, uri("expenses"), nil)
-	err := res.Decode(&es)
-
-	assert.Nil(t, err)
-	assert.EqualValues(t, http.StatusOK, res.StatusCode)
-	assert.Greater(t, len(es), 0)
-}
-
 func TestGetExpense(t *testing.T) {
 
-	e := seedExpense(t)
 	var latestExpense Expense
 	res := request(http.MethodGet, uri("expenses", strconv.Itoa((e.ID))), nil)
 	err := res.Decode(&latestExpense)
@@ -85,21 +74,15 @@ func TestGetExpense(t *testing.T) {
 	assert.NotEmpty(t, latestExpense.Tags)
 }
 
-func seedExpense(t *testing.T) Expense {
-	var e Expense
-	body := bytes.NewBufferString(`{
-		"title": "strawberry smoothie",
-		"amount": 79,
-		"note": "night market promotion discount 10 bath", 
-		"tags": ["food", "beverage"]
-	}`)
+func TestGetAllExpenses(t *testing.T) {
 
-	err := request(http.MethodPost, uri("expenses"), body).Decode(&e)
-	if err != nil {
-		t.Fatal("can't create expense:", err)
-	}
+	var es []Expense
+	res := request(http.MethodGet, uri("expenses"), nil)
+	err := res.Decode(&es)
 
-	return e
+	assert.Nil(t, err)
+	assert.EqualValues(t, http.StatusOK, res.StatusCode)
+	assert.Greater(t, len(es), 0)
 }
 
 func uri(paths ...string) string {
@@ -127,7 +110,7 @@ func (r *Response) Decode(v interface{}) error {
 
 func request(method, url string, body io.Reader) *Response {
 	req, _ := http.NewRequest(method, url, body)
-	auth := "Bearer 27-Dec-2022"
+	auth := "Bearer api-key-naja"
 	req.Header.Add("Authorization", auth)
 	req.Header.Add("Content-Type", "application/json")
 	client := http.Client{}

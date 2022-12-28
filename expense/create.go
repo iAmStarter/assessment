@@ -8,14 +8,16 @@ import (
 	"github.com/lib/pq"
 )
 
-func CreateExpensesHandler(c echo.Context) error {
+func (h *handler) CreateExpenses(c echo.Context) error {
 	var e Expense
 	err := c.Bind(&e)
+	fmt.Println("expenseObj", e.Tags)
+
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, Err{Message: err.Error()})
 	}
 
-	row := db.QueryRow("INSERT INTO expenses (title, amount, note, tags) values ($1, $2, $3, $4) RETURNING id, title, amount, note, tags", e.Title, e.Amount, e.Note, pq.Array(&e.Tags))
+	row := h.database.QueryRow("INSERT INTO expenses (title, amount, note, tags) values ($1, $2, $3, $4) RETURNING id, title, amount, note, tags", e.Title, e.Amount, e.Note, pq.Array(&e.Tags))
 
 	err = row.Scan(&e.ID, &e.Title, &e.Amount, &e.Note, pq.Array(&e.Tags))
 

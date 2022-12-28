@@ -3,19 +3,13 @@ package expense
 import (
 	"database/sql"
 	"log"
-	"os"
 )
 
-var db *sql.DB
+type handler struct {
+	database *sql.DB
+}
 
-func InitDB() {
-	var err error
-	url := os.Getenv("DATABASE_URL")
-	db, err = sql.Open("postgres", url)
-
-	if err != nil {
-		log.Fatal("Connect to database error", err)
-	}
+func InitDB(db *sql.DB) *handler {
 
 	createTb := `CREATE TABLE IF NOT EXISTS expenses (
 		id SERIAL PRIMARY KEY,
@@ -25,9 +19,10 @@ func InitDB() {
 		tags TEXT[]
 	);`
 
-	_, err = db.Exec(createTb)
+	_, err := db.Exec(createTb)
 	if err != nil {
 		log.Fatal("can't create table", err)
 	}
 
+	return &handler{db}
 }
